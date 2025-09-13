@@ -1,10 +1,10 @@
-package com.mkr.notesdemo;
+package com.secure.notes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NotesDemoApplicationTests {
+class NotesApplicationTests {
 
 	@Test
 	void contextLoads() {

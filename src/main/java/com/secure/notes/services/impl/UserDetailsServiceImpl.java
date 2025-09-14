@@ -1,4 +1,4 @@
-package com.secure.notes.services;
+package com.secure.notes.services.impl;
 
 import com.secure.notes.models.User;
 import com.secure.notes.repositories.UserRepository;

@@ -1,4 +1,4 @@
-package com.secure.notes.services;
+package com.secure.notes.services.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.secure.notes.models.User;

@@ -20,6 +20,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -33,13 +34,17 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, CustomLoggingFilter customLoggingFilter) throws Exception {
+
+        http.csrf(csrf ->
+                csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .ignoringRequestMatchers("/h2-console/**", "/api/auth/**"));
+//        http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests)
                 -> requests
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
-        http.csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(customLoggingFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAfter(new RequestValidationFilter(), CustomLoggingFilter.class);
+//        http.addFilterAfter(new RequestValidationFilter(), CustomLoggingFilter.class);
         //http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
